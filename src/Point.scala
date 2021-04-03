@@ -1,1 +1,1 @@
-class Point(var x: Double, var y: Double)
+class Point(val x: Double, val y: Double)

@@ -1,4 +1,4 @@
-object Main {
+/*object MainTrain {
     def testTimeSeries(): Unit = {
         val ts = new TimeSeries("csv/train.csv")
         val a = Vector(1, 2, 3, 4)
@@ -78,4 +78,4 @@ object Main {
         testHAD()
         println("done")
     }
-}
+}*/
