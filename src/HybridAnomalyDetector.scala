@@ -1,5 +1,5 @@
 object HybridAnomalyDetector extends AnomalyDetector {
-    override def learn(normal: TimeSeries): Map[String, String] = {
+    override def learn(normal: TimeSeries) : Map[String, String] = {
         var model: Map[String, String] = Map()
         var compareWith = normal.features
         normal.features.foreach(f => {
@@ -29,7 +29,7 @@ object HybridAnomalyDetector extends AnomalyDetector {
         model
     }
 
-    override def detect(model: Map[String, String], test: TimeSeries): Vector[(String, Int)] = {
+    override def detect(model: Map[String, String], test: TimeSeries) : Vector[(String, Int)] = {
         var anomalies: Vector[(String, Int)] = Vector()
         model.keys.foreach(corr => {
             val keySplit = corr.split(',')

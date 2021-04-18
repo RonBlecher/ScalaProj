@@ -1,5 +1,5 @@
 object Main {
-    def testTimeSeries(): Unit = {
+    def testTimeSeries() : Unit = {
         val ts = new TimeSeries("csv/train.csv")
         val a = Vector(1, 2, 3, 4)
         val b = Vector(3, 4, 5)
@@ -17,7 +17,7 @@ object Main {
             println("when index is out of bounds you should return None (-1)")
     }
 
-    def testZAD(): Unit = {
+    def testZAD() : Unit = {
         val ts = new TimeSeries("csv/train2.csv")
         val model = ZAnomalyDetector.learn(ts)
         val r0 = ZAnomalyDetector.detect(model, ts)
@@ -30,7 +30,7 @@ object Main {
             println("wrong anomaly detected (-10)")
     }
 
-    def testLRAD(): Unit = {
+    def testLRAD() : Unit = {
         val ts = new TimeSeries("csv/train3.csv")
         val model = LinearRegAnomalyDetector.learn(ts)
         val r0 = LinearRegAnomalyDetector.detect(model, ts)
@@ -43,7 +43,7 @@ object Main {
             println("wrong anomalies reported (-10)")
     }
 
-    def testSSD(): Unit = {
+    def testSSD() : Unit = {
         val ts = new TimeSeries("csv/train3.csv")
         val model = SumSqrAnomalyDetector.learn(ts)
         val r0 = SumSqrAnomalyDetector.detect(model, ts)
@@ -56,7 +56,7 @@ object Main {
             println("wrong anomalies reported (-10)")
     }
 
-    def testHAD(): Unit = {
+    def testHAD() : Unit = {
         val ts = new TimeSeries("csv/train4.csv")
         val model = HybridAnomalyDetector.learn(ts)
         val r0 = HybridAnomalyDetector.detect(model, ts)
@@ -70,7 +70,7 @@ object Main {
             println("wrong anomalies reported (-10)")
     }
 
-    def main(args: Array[String]): Unit = {
+    def main(args: Array[String]) : Unit = {
         testTimeSeries()
         testZAD()
         testLRAD()

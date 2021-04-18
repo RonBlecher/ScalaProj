@@ -1,5 +1,5 @@
 object ZAnomalyDetector extends AnomalyDetector {
-    override def learn(normal: TimeSeries): Map[String, String] = {
+    override def learn(normal: TimeSeries) : Map[String, String] = {
         var model: Map[String, String] = Map()
         normal.features.foreach(f => {
             val column = normal.getValues(f).get.toArray
@@ -9,7 +9,7 @@ object ZAnomalyDetector extends AnomalyDetector {
         model
     }
 
-    override def detect(model: Map[String, String], test: TimeSeries): Vector[(String, Int)] = {
+    override def detect(model: Map[String, String], test: TimeSeries) : Vector[(String, Int)] = {
         var anomalies: Vector[(String, Int)] = Vector()
         test.features.foreach(f => {
             var row = 0

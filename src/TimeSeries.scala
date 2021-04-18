@@ -1,34 +1,44 @@
+import scala.collection.mutable
 import scala.io.Source
 
 class TimeSeries(csvFileName: String) {
-    private val fileSource = Source.fromFile(csvFileName)
-    val features: Vector[String] = fileSource.getLines().map(_.split(',').toVector).next()
-    val values: Array[Array[Double]] = fileSource.getLines().map(_.split(',').map(_.toDouble)).toArray
-    fileSource.close()
+    val (features: Vector[String], colsMap: mutable.HashMap[String, Vector[Double]]) = {
+        val fileSource = Source.fromFile(csvFileName)
+        val linesIterator = fileSource.getLines()
+        val fieldsName = linesIterator.map(_.split(',').toVector).next()
+        val valuesMatrix = linesIterator.map(_.split(',').map(_.toDouble)).toArray
+        fileSource.close()
+
+        val hashMap = new mutable.HashMap[String, Vector[Double]]
+        var col = 0
+        fieldsName.foreach(field => {
+            hashMap.put(field, valuesMatrix.map(_(col)).toVector)
+            col += 1
+        })
+        (fieldsName, hashMap)
+    }
 
     def getValue(feature: String, timeStep: Int) : Option[Double] = {
-        val f_col = features.indexOf(feature)
-        if (f_col == -1 || timeStep < 0 || timeStep > values.length - 1)
+        if (features.indexOf(feature) == -1 ||
+                timeStep < 0 || timeStep > colsMap(feature).length - 1)
             None
         else
-            Some(values(timeStep)(f_col))
+            Some(colsMap(feature)(timeStep))
     }
 
     def getValues(feature: String) : Option[Vector[Double]] = {
-        val f_col = features.indexOf(feature)
-        if (f_col == -1)
+        if (features.indexOf(feature) == -1)
             None
         else
-            Some(values.map(_(f_col)).toVector)
+            Some(colsMap(feature))
     }
 
     def getValues(feature: String, range: Range) : Option[Vector[Double]] = {
-        val f_col = features.indexOf(feature)
-        if (f_col == -1 ||
-            range.start < 0 || range.start > values.length - 1 ||
-            range.end < 0   || range.end > values.length - 1)
+        if (features.indexOf(feature) == -1 ||
+                range.start < 0 || range.start > colsMap(feature).length - 1 ||
+                range.end < 0   || range.end > colsMap(feature).length - 1)
             None
         else
-            Some(range.map(row => values(row)(f_col)).toVector)
+            Some(range.map(i => colsMap(feature)(i)).toVector)
     }
 }
