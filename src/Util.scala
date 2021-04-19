@@ -88,7 +88,7 @@ object Util {
     }
 
     def getMaxCorrelation(feature: String, compareWith: Vector[String], ts: TimeSeries) : Option[(String, Double)] = {
-        var maxCorrelation = (feature, -1.0)
+        var maxCorrelation = ("", -1.0)
         val curColumn = ts.getValues(feature).get.toArray
         compareWith.foreach(f => {
             val col = ts.getValues(f).get.toArray
@@ -96,9 +96,9 @@ object Util {
             if (corr > maxCorrelation._2)
                 maxCorrelation = (f, corr)
         })
-        if (maxCorrelation._2 != -1.0)
-            Some(maxCorrelation)
-        else
+        if (maxCorrelation._2 == -1.0)
             None
+        else
+            Some(maxCorrelation)
     }
 }
