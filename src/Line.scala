@@ -5,7 +5,7 @@ class Line(val points: Array[Point]) {
     val b: Double = Util.mean(ys) - (a * Util.mean(xs))
 
     def f(x: Double) : Double = {
-        (a * x) + b
+        Line.f(x, a, b)
     }
 
     def dist(p: Point) : Double = {
@@ -18,7 +18,12 @@ class Line(val points: Array[Point]) {
 }
 
 object Line {
+    def f(x: Double, a: Double, b: Double) : Double = {
+        (a * x) + b
+    }
+
     def dist(a: Double, b: Double, x: Double, y: Double) : Double = {
-        math.abs(((a * x) + b) - y)
+        val fx = f(x, a, b)
+        math.abs(fx - y)
     }
 }

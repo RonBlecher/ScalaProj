@@ -43,7 +43,8 @@ object Util {
     }
 
     def entropy(arr: Array[Double]) : Double = {
-        arr.zip(probs(arr)).distinct.map(p => -p._2 * log10(p._2) / log10(2.0)).sum
+        val log10_2 = log10(2.0)
+        -1.0 * arr.zip(probs(arr)).distinct.map(p => p._2 * log10(p._2) / log10_2).sum
     }
 
     def mean(arr: Array[Double]) : Double = {
