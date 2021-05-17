@@ -33,7 +33,7 @@ class TimeSeries(csvFileName: String, from: Int, until: Int) {
             // splitList already set
         }
         else if (n == 1) {
-            splitList = splitList :+ new TimeSeries(csvFileName)
+            splitList = splitList :+ this
         }
         else {
             val chunkSize = rowsNum / n
